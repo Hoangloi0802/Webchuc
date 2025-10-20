@@ -22,23 +22,22 @@
       align-items: center;
       flex-direction: column;
       color: #fff;
-      text-align: center;
       user-select: none;
     }
 
-    /* --- Bức thư đóng --- */
+    /* --- Phong bì --- */
     .envelope {
       position: relative;
-      width: 180px;
-      height: 120px;
+      width: 200px;
+      height: 130px;
       background: pink;
-      border-radius: 8px;
+      border-radius: 10px;
       box-shadow: 0 0 20px rgba(255, 105, 180, 0.7);
       cursor: pointer;
-      transition: all 0.5s ease;
+      transition: all 0.6s ease;
+      transform-style: preserve-3d;
     }
 
-    /* Phần nắp thư */
     .envelope::before {
       content: "";
       position: absolute;
@@ -48,118 +47,95 @@
       height: 60%;
       background: linear-gradient(to bottom right, #ff9acb, #ff6fb3);
       clip-path: polygon(0 0, 100% 0, 50% 100%);
-      transition: transform 0.5s ease;
+      transition: transform 0.7s ease;
       transform-origin: top;
     }
 
-    /* Hover hiệu ứng */
     .envelope:hover {
       transform: scale(1.05) rotate(-2deg);
-      box-shadow: 0 0 35px rgba(255, 105, 180, 1);
+      box-shadow: 0 0 30px rgba(255, 182, 193, 0.9);
     }
 
     .envelope:hover::before {
       transform: rotateX(25deg);
     }
 
-    /* Khi mở thư */
     .envelope.open::before {
       transform: rotateX(180deg);
     }
 
+    /* --- Tờ giấy --- */
     .letter-paper {
       position: absolute;
       top: 100%;
       left: 50%;
-      transform: translateX(-50%);
-      width: 160px;
-      background: #fff0f5;
-      color: #d63384;
-      border-radius: 6px;
-      padding: 10px;
-      font-size: 14px;
-      box-shadow: 0 0 10px rgba(255, 105, 180, 0.6);
+      transform: translateX(-50%) scale(0.9);
+      width: 90vw;
+      max-width: 400px;
+      min-height: 60vh;
+      background: linear-gradient(145deg, #fffafc, #fff0f7);
+      border-radius: 20px;
+      padding: 24px;
+      font-size: 16px;
+      color: #c2185b;
+      box-shadow: 0 10px 30px rgba(255, 105, 180, 0.5);
       opacity: 0;
-      transition: all 0.8s ease;
+      transition: all 1s ease;
       pointer-events: none;
+      border: 2px solid #ff8fc1;
+      font-family: 'Courier New', monospace;
+      white-space: pre-wrap;
+      background-image: repeating-linear-gradient(#fffafc, #fffafc 28px, #ffeff6 29px);
+      line-height: 28px;
+      text-align: left;
+      overflow: hidden;
+      position: relative;
     }
 
     .envelope.open .letter-paper {
-      top: -160%;
+      top: -320%;
       opacity: 1;
+      transform: translateX(-50%) scale(1);
       pointer-events: all;
     }
 
-    /* --- Phần chữ chạy --- */
-    #banner-area {
-      display: none;
+    /* --- Ánh sáng quét --- */
+    .letter-paper::after {
+      content: "";
       position: absolute;
-      top: 10%;
-      left: 0;
-      width: 100%;
-      overflow: hidden;
-      animation: fadeIn 1.5s ease;
+      top: 0;
+      left: -75%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.4), transparent);
+      transform: skewX(-25deg);
+      animation: shine 4s infinite;
     }
 
-    .show {
-      display: block !important;
-    }
-
-    .row-wrapper {
-      position: relative;
-      width: 100vw;
-      height: 40px;
-      overflow: hidden;
-      margin: 12px 0;
-    }
-
-    .scroll-container {
-      display: inline-block;
-      white-space: nowrap;
-      animation: scroll-loop 25s linear infinite;
-      min-width: 200%;
-    }
-
-    .scroll-text {
-      font-size: 28px;
-      font-weight: bold;
-      padding-right: 100px;
-      background: linear-gradient(90deg, #ff69b4, #ffccff, #ff69b4);
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: colorShift 4s linear infinite;
-    }
-
-    @keyframes scroll-loop {
+    @keyframes shine {
       0% {
-        transform: translateX(0);
+        left: -75%;
+      }
+
+      50% {
+        left: 125%;
       }
 
       100% {
-        transform: translateX(-100%);
+        left: 125%;
       }
     }
 
-    @keyframes colorShift {
-      0% {
-        background-position: 0% center;
-      }
-
-      100% {
-        background-position: 200% center;
-      }
+    /* --- Viết chữ --- */
+    .typed-text {
+      border-right: 2px solid #c2185b;
+      animation: blink 0.7s steps(1) infinite;
+      word-wrap: break-word;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: scale(0.95);
-      }
-
-      to {
-        opacity: 1;
-        transform: scale(1);
+    @keyframes blink {
+      50% {
+        border-color: transparent;
       }
     }
 
@@ -167,10 +143,11 @@
     .heart {
       position: fixed;
       top: -10px;
-      color: red;
-      font-size: 20px;
+      color: #ff5fa2;
+      font-size: 18px;
       animation: fall linear forwards;
       z-index: 10;
+      text-shadow: 0 0 6px rgba(255, 192, 203, 0.8);
     }
 
     @keyframes fall {
@@ -188,28 +165,40 @@
     /* --- Responsive --- */
     @media (max-width: 768px) {
       .envelope {
-        width: 150px;
-        height: 100px;
+        width: 160px;
+        height: 110px;
       }
 
       .letter-paper {
-        width: 130px;
-        font-size: 12px;
-      }
-
-      .scroll-text {
-        font-size: 22px;
+        font-size: 15px;
+        padding: 20px;
+        line-height: 26px;
+        min-height: 65vh;
       }
     }
 
     @media (max-width: 480px) {
       .envelope {
-        width: 130px;
-        height: 90px;
+        width: 140px;
+        height: 95px;
       }
 
-      .scroll-text {
-        font-size: 18px;
+      .letter-paper {
+        font-size: 14px;
+        padding: 16px;
+        border-radius: 15px;
+        width: 92vw;
+        line-height: 24px;
+      }
+
+      .typed-text {
+        border-right-width: 1.5px;
+      }
+    }
+
+    @media (max-height: 600px) {
+      .letter-paper {
+        min-height: 70vh;
       }
     }
   </style>
@@ -218,69 +207,47 @@
 <body>
 
   <div class="envelope" id="envelope">
-    <div class="letter-paper">💌 20/10 — Một bức thư nhỏ gửi đến em 💗</div>
+    <div class="letter-paper">
+      <div id="typedText" class="typed-text"></div>
+    </div>
   </div>
 
-  <div id="banner-area"></div>
-
   <script>
-    const messages = [
-      "💖 Chúc em ngày 20/10 thật hạnh phúc 💖",
-      "🌸 Luôn giữ nụ cười thật xinh 🌸",
-      "💞 Anh yêu em nhiều vô cùng 💞",
-      "💗 Em là món quà tuyệt vời nhất 💗",
-      "✨ Mỗi ngày bên em là một phép màu ✨",
-      "🌷 Chúc em luôn rạng rỡ như hoa 🌷",
-      "💖 Chúc em ngày 20/10 thật hạnh phúc 💖",
-      "🌸 Luôn giữ nụ cười thật xinh 🌸",
-      "💞 Anh yêu em nhiều vô cùng 💞",
-      "💗 Em là món quà tuyệt vời nhất 💗",
-      "✨ Mỗi ngày bên em là một phép màu ✨",
-      "🌷 Chúc em luôn rạng rỡ như hoa 🌷",
-      "💖 Chúc em ngày 20/10 thật hạnh phúc 💖",
-      "🌸 Luôn giữ nụ cười thật xinh 🌸",
-      "💞 Anh yêu em nhiều vô cùng 💞",
-      "💗 Em là món quà tuyệt vời nhất 💗",
-      "✨ Mỗi ngày bên em là một phép màu ✨",
-      "🌷 Chúc em luôn rạng rỡ như hoa 🌷",
-      "🎉 Hôm nay là ngày của em 🎉"
-    ];
-
-    const bannerArea = document.getElementById("banner-area");
     const envelope = document.getElementById("envelope");
+    const typedText = document.getElementById("typedText");
 
-    // Khi bấm mở thư
+    const message = `💐 Gửi bạn nhân ngày 20/10 💐
+
+Chúc bạn luôn thật xinh đẹp, tỏa sáng và hạnh phúc thành công trong cuộc sống.
+
+
+Chúc bạn một ngày 20/10 ngọt ngào,
+tràn đầy yêu thương và niềm vui 💖.
+
+Thân ái,
+Người gửi`;
+
     envelope.addEventListener("click", () => {
       envelope.classList.add("open");
 
       setTimeout(() => {
-        envelope.style.display = "none";
-        bannerArea.classList.add("show");
-      }, 1500);
+        typeWriter(message, 0);
+      }, 1200);
     });
 
-    // Tạo dòng chữ chạy
-    messages.forEach(msg => {
-      const wrapper = document.createElement("div");
-      wrapper.className = "row-wrapper";
+    function typeWriter(text, i) {
+      if (i < text.length) {
+        typedText.textContent = text.substring(0, i + 1);
+        setTimeout(() => typeWriter(text, i + 1), 50);
+      } else {
+        typedText.style.borderRight = "none";
+      }
+    }
 
-      const container = document.createElement("div");
-      container.className = "scroll-container";
-
-      const text = document.createElement("div");
-      text.className = "scroll-text";
-      text.textContent = (msg + "  ").repeat(20);
-
-      container.appendChild(text);
-      wrapper.appendChild(container);
-      bannerArea.appendChild(wrapper);
-    });
-
-    // Trái tim rơi
     function createHeart() {
       const heart = document.createElement("div");
       heart.classList.add("heart");
-      heart.innerHTML = "💖";
+      heart.innerHTML = "💐";
       document.body.appendChild(heart);
 
       const size = Math.random() * 20 + 10 + "px";
