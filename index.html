@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>💌 Bức thư 20/10 💌</title>
   <style>
     * {
@@ -15,7 +16,7 @@
       background: radial-gradient(circle at center, #1a001a, #000);
       height: 100vh;
       overflow: hidden;
-      font-family: Arial, sans-serif;
+      font-family: "Poppins", Arial, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -25,43 +26,102 @@
       user-select: none;
     }
 
-    /* Bức thư */
-    .letter {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 40px 60px;
-      border: 2px solid pink;
-      border-radius: 12px;
-      box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+    /* --- Bức thư đóng --- */
+    .envelope {
+      position: relative;
+      width: 180px;
+      height: 120px;
+      background: pink;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.7);
       cursor: pointer;
-      font-size: 22px;
-      backdrop-filter: blur(8px);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: all 0.5s ease;
     }
 
-    .letter:hover {
-      transform: scale(1.03);
-      box-shadow: 0 0 25px rgba(255, 105, 180, 1);
+    /* Phần nắp thư */
+    .envelope::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60%;
+      background: linear-gradient(to bottom right, #ff9acb, #ff6fb3);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transition: transform 0.5s ease;
+      transform-origin: top;
     }
 
-    /* Phần chữ chạy */
+    /* Hover hiệu ứng */
+    .envelope:hover {
+      transform: scale(1.05) rotate(-2deg);
+      box-shadow: 0 0 35px rgba(255, 105, 180, 1);
+    }
+
+    .envelope:hover::before {
+      transform: rotateX(25deg);
+    }
+
+    /* Khi mở thư */
+    .envelope.open::before {
+      transform: rotateX(180deg);
+    }
+
+    .letter-paper {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 160px;
+      background: #fff0f5;
+      color: #d63384;
+      border-radius: 6px;
+      padding: 10px;
+      font-size: 14px;
+      box-shadow: 0 0 10px rgba(255, 105, 180, 0.6);
+      opacity: 0;
+      transition: all 0.8s ease;
+      pointer-events: none;
+    }
+
+    .envelope.open .letter-paper {
+      top: -160%;
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* --- Phần chữ chạy --- */
+    #banner-area {
+      display: none;
+      position: absolute;
+      top: 10%;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      animation: fadeIn 1.5s ease;
+    }
+
+    .show {
+      display: block !important;
+    }
+
     .row-wrapper {
       position: relative;
       width: 100vw;
-      height: 48px;
+      height: 40px;
       overflow: hidden;
-      margin: 20px 0;
+      margin: 12px 0;
     }
 
     .scroll-container {
       display: inline-block;
       white-space: nowrap;
       animation: scroll-loop 25s linear infinite;
-      will-change: transform;
       min-width: 200%;
     }
 
     .scroll-text {
-      font-size: 36px;
+      font-size: 28px;
       font-weight: bold;
       padding-right: 100px;
       background: linear-gradient(90deg, #ff69b4, #ffccff, #ff69b4);
@@ -91,14 +151,27 @@
       }
     }
 
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* --- Trái tim rơi --- */
     .heart {
       position: fixed;
       top: -10px;
       color: red;
       font-size: 20px;
       animation: fall linear forwards;
+      z-index: 10;
     }
-
 
     @keyframes fall {
       0% {
@@ -112,30 +185,31 @@
       }
     }
 
-    /* Ẩn banner lúc đầu */
-    #banner-area {
-      display: none;
-      position: absolute;
-      top: 10%;
-      left: 0;
-      width: 100%;
-      overflow: hidden;
-    }
-
-    .show {
-      display: block !important;
-      animation: fadeIn 1.2s ease;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: scale(0.95);
+    /* --- Responsive --- */
+    @media (max-width: 768px) {
+      .envelope {
+        width: 150px;
+        height: 100px;
       }
 
-      to {
-        opacity: 1;
-        transform: scale(1);
+      .letter-paper {
+        width: 130px;
+        font-size: 12px;
+      }
+
+      .scroll-text {
+        font-size: 22px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .envelope {
+        width: 130px;
+        height: 90px;
+      }
+
+      .scroll-text {
+        font-size: 18px;
       }
     }
   </style>
@@ -143,8 +217,8 @@
 
 <body>
 
-  <div class="letter" id="letter">
-    💌 Nhấn 3 lần để mở bức thư bí mật 💌
+  <div class="envelope" id="envelope">
+    <div class="letter-paper">💌 20/10 — Một bức thư nhỏ gửi đến em 💗</div>
   </div>
 
   <div id="banner-area"></div>
@@ -157,27 +231,44 @@
       "💗 Em là món quà tuyệt vời nhất 💗",
       "✨ Mỗi ngày bên em là một phép màu ✨",
       "🌷 Chúc em luôn rạng rỡ như hoa 🌷",
-      "🎉 Hôm nay là ngày của em 🎉",
-       "💖 Chúc em ngày 20/10 thật hạnh phúc 💖",
+      "💖 Chúc em ngày 20/10 thật hạnh phúc 💖",
       "🌸 Luôn giữ nụ cười thật xinh 🌸",
       "💞 Anh yêu em nhiều vô cùng 💞",
-      "💗 Em là món quà tuyệt vời nhất 💗"
-
+      "💗 Em là món quà tuyệt vời nhất 💗",
+      "✨ Mỗi ngày bên em là một phép màu ✨",
+      "🌷 Chúc em luôn rạng rỡ như hoa 🌷",
+      "💖 Chúc em ngày 20/10 thật hạnh phúc 💖",
+      "🌸 Luôn giữ nụ cười thật xinh 🌸",
+      "💞 Anh yêu em nhiều vô cùng 💞",
+      "💗 Em là món quà tuyệt vời nhất 💗",
+      "✨ Mỗi ngày bên em là một phép màu ✨",
+      "🌷 Chúc em luôn rạng rỡ như hoa 🌷",
+      "🎉 Hôm nay là ngày của em 🎉"
     ];
 
-    const bannerArea = document.getElementById('banner-area');
+    const bannerArea = document.getElementById("banner-area");
+    const envelope = document.getElementById("envelope");
 
-    // Tạo các dòng chữ chạy cùng lúc
+    // Khi bấm mở thư
+    envelope.addEventListener("click", () => {
+      envelope.classList.add("open");
+
+      setTimeout(() => {
+        envelope.style.display = "none";
+        bannerArea.classList.add("show");
+      }, 1500);
+    });
+
+    // Tạo dòng chữ chạy
     messages.forEach(msg => {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'row-wrapper';
+      const wrapper = document.createElement("div");
+      wrapper.className = "row-wrapper";
 
-      const container = document.createElement('div');
-      container.className = 'scroll-container';
-    
+      const container = document.createElement("div");
+      container.className = "scroll-container";
 
-      const text = document.createElement('div');
-      text.className = 'scroll-text';
+      const text = document.createElement("div");
+      text.className = "scroll-text";
       text.textContent = (msg + "  ").repeat(20);
 
       container.appendChild(text);
@@ -185,7 +276,7 @@
       bannerArea.appendChild(wrapper);
     });
 
-    // Tạo trái tim rơi
+    // Trái tim rơi
     function createHeart() {
       const heart = document.createElement("div");
       heart.classList.add("heart");
@@ -195,77 +286,13 @@
       const size = Math.random() * 20 + 10 + "px";
       heart.style.left = Math.random() * window.innerWidth + "px";
       heart.style.fontSize = size;
-      heart.style.animationDuration = Math.random() * 3 + 4 + "s"; // tốc độ rơi
+      heart.style.animationDuration = Math.random() * 3 + 4 + "s";
       heart.style.opacity = Math.random();
 
-      setTimeout(() => {
-        heart.remove();
-      }, 7000);
+      setTimeout(() => heart.remove(), 7000);
     }
-    setInterval(createHeart, 150);
-    // Hiệu ứng chuột
-    document.addEventListener('mousemove', (e) => {
-      const dot = document.createElement('div');
-      dot.style.position = 'fixed';
-      dot.style.left = e.clientX + 'px';
-      dot.style.top = e.clientY + 'px';
-      dot.style.pointerEvents = 'none';
-      dot.style.width = '8px';
-      dot.style.height = '8px';
-      dot.style.borderRadius = '50%';
-      dot.style.background = 'rgba(255, 192, 203, 0.6)';
-      dot.style.zIndex = '9999';
-      dot.style.transform = 'translate(-50%, -50%) scale(1)';
-      dot.style.transition = 'transform 0.4s ease-out, opacity 0.6s ease-out';
-      document.body.appendChild(dot);
 
-      requestAnimationFrame(() => {
-        dot.style.transform = 'translate(-50%, -50%) scale(3)';
-        dot.style.opacity = '0';
-      });
-
-      setTimeout(() => dot.remove(), 600);
-    });
-
-    // Click tạo trái tim
-    document.addEventListener('click', (e) => {
-      const heart = document.createElement('div');
-      heart.textContent = '💖';
-      heart.style.position = 'fixed';
-      heart.style.left = e.clientX + 'px';
-      heart.style.top = e.clientY + 'px';
-      heart.style.pointerEvents = 'none';
-      heart.style.fontSize = '20px';
-      heart.style.opacity = '1';
-      heart.style.transition = 'all 0.8s ease-out';
-      document.body.appendChild(heart);
-
-      setTimeout(() => {
-        heart.style.top = e.clientY - 40 + 'px';
-        heart.style.opacity = '0';
-      }, 10);
-
-      setTimeout(() => heart.remove(), 1000);
-    });
-
-    // Ẩn/hiện khi nhấn 3 lần vào bức thư
-    const letter = document.getElementById('letter');
-    let clickCount = 0;
-    let timer;
-
-    letter.addEventListener('click', () => {
-      clickCount++;
-      clearTimeout(timer);
-
-      timer = setTimeout(() => {
-        if (clickCount === 3) {
-          bannerArea.classList.add('show');
-          letter.style.display = 'none';
-          setInterval(createHeart, 600);
-        }
-        clickCount = 0;
-      }, 400);
-    });
+    setInterval(createHeart, 200);
   </script>
 
 </body>
