@@ -1,38 +1,69 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
-  <title>Chữ chạy & Trái tim rơi</title>
+  <title>💌 Bức thư 20/10 💌</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       background: radial-gradient(circle at center, #1a001a, #000);
       height: 100vh;
       overflow: hidden;
       font-family: Arial, sans-serif;
       display: flex;
-      flex-direction: column;
       justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: #fff;
+      text-align: center;
+      user-select: none;
     }
 
+    /* Bức thư */
+    .letter {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 40px 60px;
+      border: 2px solid pink;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+      cursor: pointer;
+      font-size: 22px;
+      backdrop-filter: blur(8px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .letter:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 25px rgba(255, 105, 180, 1);
+    }
+
+    /* Phần chữ chạy */
     .row-wrapper {
       position: relative;
-      width: 100%;
-      height: 32px;
+      width: 100vw;
+      height: 48px;
       overflow: hidden;
-      margin: 12px 0;
+      margin: 20px 0;
     }
 
     .scroll-container {
-      display: flex;
+      display: inline-block;
       white-space: nowrap;
-      animation: scroll-loop 20s linear infinite;
+      animation: scroll-loop 25s linear infinite;
+      will-change: transform;
+      min-width: 200%;
     }
 
     .scroll-text {
-      font-size: 22px;
+      font-size: 36px;
       font-weight: bold;
-      padding-right: 80px;
+      padding-right: 100px;
       background: linear-gradient(90deg, #ff69b4, #ffccff, #ff69b4);
       background-size: 200% auto;
       -webkit-background-clip: text;
@@ -41,130 +72,202 @@
     }
 
     @keyframes scroll-loop {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-100%);
+      }
     }
 
     @keyframes colorShift {
-      0% { background-position: 0% center; }
-      100% { background-position: 200% center; }
+      0% {
+        background-position: 0% center;
+      }
+
+      100% {
+        background-position: 200% center;
+      }
     }
 
     .heart {
-      position: absolute;
-      color: pink;
-      font-size: 18px;
-      pointer-events: none;
-      animation: fall 6s linear forwards;
-      opacity: 0.7;
+      position: fixed;
+      top: -10px;
+      color: red;
+      font-size: 20px;
+      animation: fall linear forwards;
     }
+
 
     @keyframes fall {
       0% {
         transform: translateY(-40px) scale(1);
         opacity: 0.9;
       }
+
       100% {
         transform: translateY(100vh) scale(0.5);
         opacity: 0;
       }
     }
+
+    /* Ẩn banner lúc đầu */
+    #banner-area {
+      display: none;
+      position: absolute;
+      top: 10%;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .show {
+      display: block !important;
+      animation: fadeIn 1.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
   </style>
 </head>
+
 <body>
 
-<div id="banner-area"></div>
+  <div class="letter" id="letter">
+    💌 Nhấn 3 lần để mở bức thư bí mật 💌
+  </div>
 
-<script>
-  // Dòng chữ chạy
-  const messages = [
-    "💖 Chúc em ngày 20/10 thật hạnh phúc 💖",
-    "🌸 Luôn giữ nụ cười thật xinh 🌸",
-    "💞 Anh yêu em nhiều vô cùng 💞",
-    "💗 Em là món quà tuyệt vời nhất 💗",
-    "✨ Mỗi ngày bên em là một phép màu ✨"
-  ];
+  <div id="banner-area"></div>
 
-  const bannerArea = document.getElementById('banner-area');
+  <script>
+    const messages = [
+      "💖 Chúc em ngày 20/10 thật hạnh phúc 💖",
+      "🌸 Luôn giữ nụ cười thật xinh 🌸",
+      "💞 Anh yêu em nhiều vô cùng 💞",
+      "💗 Em là món quà tuyệt vời nhất 💗",
+      "✨ Mỗi ngày bên em là một phép màu ✨",
+      "🌷 Chúc em luôn rạng rỡ như hoa 🌷",
+      "🎉 Hôm nay là ngày của em 🎉",
+       "💖 Chúc em ngày 20/10 thật hạnh phúc 💖",
+      "🌸 Luôn giữ nụ cười thật xinh 🌸",
+      "💞 Anh yêu em nhiều vô cùng 💞",
+      "💗 Em là món quà tuyệt vời nhất 💗"
 
-  messages.forEach((msg, index) => {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'row-wrapper';
+    ];
 
-    const container = document.createElement('div');
-    container.className = 'scroll-container';
-    container.style.animationDelay = `${index * 2}s`;
+    const bannerArea = document.getElementById('banner-area');
 
-    const text1 = document.createElement('div');
-    text1.className = 'scroll-text';
-    text1.textContent = (msg + "  ").repeat(4);
+    // Tạo các dòng chữ chạy cùng lúc
+    messages.forEach(msg => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'row-wrapper';
 
-    const text2 = text1.cloneNode(true);
+      const container = document.createElement('div');
+      container.className = 'scroll-container';
+    
 
-    container.appendChild(text1);
-    container.appendChild(text2);
-    wrapper.appendChild(container);
-    bannerArea.appendChild(wrapper);
-  });
+      const text = document.createElement('div');
+      text.className = 'scroll-text';
+      text.textContent = (msg + "  ").repeat(20);
 
-  // Trái tim rơi
-  function createHeart() {
-    const heart = document.createElement('div');
-    heart.className = 'heart';
-    heart.textContent = '❤️';
-    heart.style.left = Math.random() * window.innerWidth + 'px';
-    heart.style.fontSize = 16 + Math.random() * 10 + 'px';
-    heart.style.animationDuration = (4 + Math.random() * 3) + 's';
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 7000);
-  }
-// Hiệu ứng con trỏ chuột với trái tim hoặc chấm
-document.addEventListener('mousemove', (e) => {
-  const dot = document.createElement('div');
-  dot.style.position = 'fixed';
-  dot.style.left = e.clientX + 'px';
-  dot.style.top = e.clientY + 'px';
-  dot.style.pointerEvents = 'none';
-  dot.style.width = '8px';
-  dot.style.height = '8px';
-  dot.style.borderRadius = '50%';
-  dot.style.background = 'rgba(255, 192, 203, 0.6)';
-  dot.style.zIndex = '9999';
-  dot.style.transform = 'translate(-50%, -50%) scale(1)';
-  dot.style.transition = 'transform 0.4s ease-out, opacity 0.6s ease-out';
-  document.body.appendChild(dot);
+      container.appendChild(text);
+      wrapper.appendChild(container);
+      bannerArea.appendChild(wrapper);
+    });
 
-  requestAnimationFrame(() => {
-    dot.style.transform = 'translate(-50%, -50%) scale(3)';
-    dot.style.opacity = '0';
-  });
+    // Tạo trái tim rơi
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "💖";
+      document.body.appendChild(heart);
 
-  setTimeout(() => dot.remove(), 600);
-});
+      const size = Math.random() * 20 + 10 + "px";
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.fontSize = size;
+      heart.style.animationDuration = Math.random() * 3 + 4 + "s"; // tốc độ rơi
+      heart.style.opacity = Math.random();
 
-// Click tạo trái tim ở vị trí chuột
-document.addEventListener('click', (e) => {
-  const heart = document.createElement('div');
-  heart.textContent = '💖';
-  heart.style.position = 'fixed';
-  heart.style.left = e.clientX + 'px';
-  heart.style.top = e.clientY + 'px';
-  heart.style.pointerEvents = 'none';
-  heart.style.fontSize = '20px';
-  heart.style.opacity = '1';
-  heart.style.transition = 'all 0.8s ease-out';
-  document.body.appendChild(heart);
+      setTimeout(() => {
+        heart.remove();
+      }, 7000);
+    }
+    setInterval(createHeart, 150);
+    // Hiệu ứng chuột
+    document.addEventListener('mousemove', (e) => {
+      const dot = document.createElement('div');
+      dot.style.position = 'fixed';
+      dot.style.left = e.clientX + 'px';
+      dot.style.top = e.clientY + 'px';
+      dot.style.pointerEvents = 'none';
+      dot.style.width = '8px';
+      dot.style.height = '8px';
+      dot.style.borderRadius = '50%';
+      dot.style.background = 'rgba(255, 192, 203, 0.6)';
+      dot.style.zIndex = '9999';
+      dot.style.transform = 'translate(-50%, -50%) scale(1)';
+      dot.style.transition = 'transform 0.4s ease-out, opacity 0.6s ease-out';
+      document.body.appendChild(dot);
 
-  setTimeout(() => {
-    heart.style.top = e.clientY - 40 + 'px';
-    heart.style.opacity = '0';
-  }, 10);
+      requestAnimationFrame(() => {
+        dot.style.transform = 'translate(-50%, -50%) scale(3)';
+        dot.style.opacity = '0';
+      });
 
-  setTimeout(() => heart.remove(), 1000);
-});
+      setTimeout(() => dot.remove(), 600);
+    });
 
-  setInterval(createHeart, 600);
-</script>
+    // Click tạo trái tim
+    document.addEventListener('click', (e) => {
+      const heart = document.createElement('div');
+      heart.textContent = '💖';
+      heart.style.position = 'fixed';
+      heart.style.left = e.clientX + 'px';
+      heart.style.top = e.clientY + 'px';
+      heart.style.pointerEvents = 'none';
+      heart.style.fontSize = '20px';
+      heart.style.opacity = '1';
+      heart.style.transition = 'all 0.8s ease-out';
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.style.top = e.clientY - 40 + 'px';
+        heart.style.opacity = '0';
+      }, 10);
+
+      setTimeout(() => heart.remove(), 1000);
+    });
+
+    // Ẩn/hiện khi nhấn 3 lần vào bức thư
+    const letter = document.getElementById('letter');
+    let clickCount = 0;
+    let timer;
+
+    letter.addEventListener('click', () => {
+      clickCount++;
+      clearTimeout(timer);
+
+      timer = setTimeout(() => {
+        if (clickCount === 3) {
+          bannerArea.classList.add('show');
+          letter.style.display = 'none';
+          setInterval(createHeart, 600);
+        }
+        clickCount = 0;
+      }, 400);
+    });
+  </script>
 
 </body>
+
 </html>
