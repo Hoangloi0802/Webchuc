@@ -144,7 +144,7 @@
 <body>
 
   <div class="letter" id="letter">
-    💌 Nhấn 3 lần để mở bức thư bí mật 💌
+    💌 Nhấn để mở bức thư bí mật 💌
   </div>
 
   <div id="banner-area"></div>
@@ -258,7 +258,7 @@
       clearTimeout(timer);
 
       timer = setTimeout(() => {
-        if (clickCount === 3) {
+        if (clickCount === 1) {
           bannerArea.classList.add('show');
           letter.style.display = 'none';
           setInterval(createHeart, 600);
